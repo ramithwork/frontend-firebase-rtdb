@@ -4,14 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>test-chat-1</title>
+
+    <style>
+        #response {
+            width: 90vw;
+            height: 50vh;
+            /* border: 1px solid black; */
+            padding: 10px;
+            background-color: darkslategrey;
+            color: rgb(211, 208, 208);
+            overflow-y: scroll;
+        }
+
+        .message {
+            margin: 15px 0;
+        }
+
+        #you-are {
+            font-size: 0.5rem;
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
+    <div id="response">No responses.</div>
+    <br>
     <form action="">
-        <p id="you-are"></p>
         <input type="text" id="user-input" name="user_input" required>
         <button type="submit" id="submit">Submit</button>
-        <div id="response">No responses.</div>
     </form>
+    <p id="you-are"></p>
 </body>
 <script type="module" src="test-chat-1.js"></script>
 </html>

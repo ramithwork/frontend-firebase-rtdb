@@ -31,7 +31,7 @@ onValue(testChatOneInDB, (snapshot) => {
             const user = item[1].user;
             const messageElm = document.createElement("div");
             messageElm.classList.add("message");
-            messageElm.innerHTML = `<small>${user}<br>${time}</small>:<br><strong>${message}</strong>`;
+            messageElm.innerHTML = `<span class="message"><small>${user}<br>${time}</small>:<br><strong>${message}</strong></span>`;
             responseElm.appendChild(messageElm);
         });
         // Scroll to the bottom of the response area
@@ -42,10 +42,13 @@ onValue(testChatOneInDB, (snapshot) => {
     }
 });
 
+const inputElm = document.getElementById("user-input");
+inputElm.focus();
+
+// Add a new message
 const submitElm = document.getElementById("submit");
 submitElm.addEventListener("click", (e) => {
     e.preventDefault();
-    const inputElm = document.getElementById("user-input");
     const inputValue = inputElm.value;
     const timeStamp = new Date().toLocaleString();
     const message = {
