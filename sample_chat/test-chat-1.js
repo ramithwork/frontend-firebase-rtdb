@@ -12,6 +12,10 @@ const testChatOneInDB = ref(database, "testChatOne");
 
 let data // To hold the data from onValue()
 
+const youAreElm = document.getElementById("you-are");
+const user = navigator.userAgent;
+youAreElm.innerHTML = `You are: <strong>${user}</strong>`;
+
 onValue(testChatOneInDB, (snapshot) => {
     if (snapshot.exists()) {
         //const data = Object.values(snapshot.val()); // Convert object to array with values only
@@ -24,9 +28,10 @@ onValue(testChatOneInDB, (snapshot) => {
         data.forEach((item) => {
             const message = item[1].message;
             const time = item[1].time;
+            const user = item[1].user;
             const messageElm = document.createElement("div");
             messageElm.classList.add("message");
-            messageElm.innerHTML = `<strong>${time}</strong>: ${message}`;
+            messageElm.innerHTML = `<small>${user}<br>${time}</small>:<br><strong>${message}</strong>`;
             responseElm.appendChild(messageElm);
         });
         // Scroll to the bottom of the response area
@@ -44,6 +49,7 @@ submitElm.addEventListener("click", (e) => {
     const inputValue = inputElm.value;
     const timeStamp = new Date().toLocaleString();
     const message = {
+        user: user,
         message: inputValue,
         time: timeStamp
     };
