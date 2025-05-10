@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Firebase JS Module Test</title>
+
+    <style>
+        body { font-family: sans-serif; }
+        #messages { margin-top: 20px; border: 1px solid #ccc; padding: 10px; }
+        #messages div { padding: 5px 0; border-bottom: 1px dotted #eee; }
+        #messages div:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+    
+    <h1>Simple Chat</h1>
+
+    <div>
+        <input type="text" id="messageInput" placeholder="Enter your message">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div id="messages"></div>
+
+</body>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="./firebaseDatabaseModule.js"></script>
+    <script>
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            if (message) {
+                window.firebaseDB.pushData('chat', { text: message, timestamp: new Date().toISOString() })
+                    .then(() => {
+                        messageInput.value = ''; // Clear the input
+                    })
+                    .catch(error => {
+                        console.error("Error sending message:", error);
+                    });
+            }
+        }
+
+        function displayMessage(snapshot) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = ''; // Clear previous messages
+            snapshot.forEach(childSnapshot => {
+                const messageData = childSnapshot.val();
+                const messageElement = document.createElement('div');
+                const text = messageData && messageData.text ? messageData.text : '[No message]';
+                const time = messageData && messageData.timestamp ? new Date(messageData.timestamp).toLocaleTimeString() : '';
+                messageElement.textContent = `${text}${time ? ' (' + time + ')' : ''}`;
+                messagesDiv.appendChild(messageElement);
+            });
+        }
+
+        // Listen for new messages
+        window.firebaseDB.listenToData('chat', (snapshot) => {
+            displayMessage(snapshot);
+        });
+    </script>
+</html>
