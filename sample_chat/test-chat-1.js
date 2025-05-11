@@ -62,3 +62,4 @@ submitElm.addEventListener("click", (e) => {
         inputElm.value = "";
     }
 });
+

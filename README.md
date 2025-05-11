@@ -173,3 +173,4 @@ Remember to replace the placeholder Firebase configuration in `firebaseDatabaseM
 - Remove an item from the DB:
     let locationRef = ref(database, "shoppingList/" + sampleId);
     remove(locationRef);
+
