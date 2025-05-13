@@ -45,6 +45,7 @@ onValue(testChatOneInDB, (snapshot) => {
         });
         // Scroll to the bottom of the response area
         responseElm.scrollTop = responseElm.scrollHeight;
+        youAreElm.innerHTML = `You are: <strong>${userId}</strong>`;
     }
     else {
         console.log("[onValue:] No data available.");
@@ -101,6 +102,8 @@ onAuthStateChanged(auth, (user) => {
                     }).then(() => {
                         // Profile updated!
                         console.log("Profile updated.")
+                        userId = `${displayName} (${currentUser.displayName})`;
+                        youAreElm.innerHTML = `You are: <strong>${userId}</strong>`;
                     }).catch((error) => {
                         // An error occurred
                         console.log("Profile NOT updated.")
